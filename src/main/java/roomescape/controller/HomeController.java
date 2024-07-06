@@ -25,4 +25,9 @@ public class HomeController {
     public String theme() {
         return "admin/theme";
     }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 }

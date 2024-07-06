@@ -25,3 +25,12 @@ CREATE TABLE reservation
     FOREIGN KEY (time_id) REFERENCES reservation_time (id),
     FOREIGN KEY (theme_id) REFERENCES theme (id)            -- 외래키 추가
 );
+
+CREATE TABLE users
+(
+   id BIGINT NOT NULL AUTO_INCREMENT,
+   name VARCHAR(21) NOT NULL,
+   email VARCHAR(40) NOT NULL,
+   password VARCHAR(16) NOT NULL,
+   PRIMARY KEY (id)
+);
