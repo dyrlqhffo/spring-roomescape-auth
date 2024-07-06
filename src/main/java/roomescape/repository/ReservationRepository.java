@@ -13,7 +13,6 @@ public interface ReservationRepository {
 
     Reservation createReservation(ReservationCreateRequest dto, ReservationTime time, Theme theme);
 
-//    ReservationDto findReservationById(Long id);
-
     void deleteReservation(Long id);
+    boolean existsByDateAndThemeAndTime(Theme theme, ReservationTime time, String date);
 }

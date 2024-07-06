@@ -9,6 +9,7 @@ import roomescape.dto.theme.create.ThemeCreateRequest;
 
 import java.sql.PreparedStatement;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ThemeRepositoryImpl implements ThemeRepository{
@@ -54,9 +55,9 @@ public class ThemeRepositoryImpl implements ThemeRepository{
     }
 
     @Override
-    public Theme findThemeById(Long themeId) {
+    public Optional<Theme> findThemeById(Long themeId) {
         String sql = "select id, name, description, thumbnail from theme where id = ?";
-        return jdbcTemplate.queryForObject(
+        return Optional.ofNullable(jdbcTemplate.queryForObject(
                 sql, (rs, rowNum) -> {
                     Theme theme = new Theme(
                             rs.getLong("id"),
@@ -65,7 +66,7 @@ public class ThemeRepositoryImpl implements ThemeRepository{
                             rs.getString("thumbnail")
                     );
                     return theme;
-                },themeId);
+                },themeId));
     }
 
     @Override

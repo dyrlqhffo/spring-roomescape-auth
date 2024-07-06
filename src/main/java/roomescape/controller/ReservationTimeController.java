@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import roomescape.dto.time.ReservationTimeRequest;
 import roomescape.dto.time.ReservationTimeResponse;
+import roomescape.dto.time.available.ReservationTimeAvailableResponse;
 import roomescape.dto.time.create.ReservationTimeCreateResponse;
 import roomescape.exception.custom.DuplicatedReservationTimeException;
 import roomescape.service.ReservationTimeService;
@@ -38,6 +39,14 @@ public class ReservationTimeController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         reservationTimeService.deleteTime(id);
         return ResponseEntity.ok().build();
+    }
+
+    //예약 가능시간 조회
+    @GetMapping("/available")
+    public ResponseEntity<List<ReservationTimeAvailableResponse>> availableTime(@RequestParam String date,
+                                                                                @RequestParam Long themeId){
+        List<ReservationTimeAvailableResponse> response = reservationTimeService.findAvailableReservationTime(date, themeId);
+        return ResponseEntity.ok().body(response);
     }
 
     @ExceptionHandler(DuplicatedReservationTimeException.class)

@@ -67,4 +67,11 @@ public class ReservationRepositoryImpl implements ReservationRepository{
         String sql = "delete from reservation where id = ?";
         jdbcTemplate.update(sql, Long.valueOf(id));
     }
+
+    @Override
+    public boolean existsByDateAndThemeAndTime(Theme theme, ReservationTime time, String date) {
+        String sql = "select count(*) from reservation where time_id = ? and theme_id =? and date = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, time.getId(), theme.getId(), date);
+        return count !=null && count >0;
+    }
 }

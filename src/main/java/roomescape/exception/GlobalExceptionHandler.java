@@ -12,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import roomescape.exception.custom.InvalidReservationTimeException;
+import roomescape.exception.custom.ThemeNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -67,4 +69,17 @@ public class GlobalExceptionHandler {
         errorResponse.put("errors", errors);
         return errorResponse;
     }
+
+    @ExceptionHandler(ThemeNotFoundException.class)
+    public ResponseEntity<ErrorCodeResponse> handlerThemeNotFoundException(ThemeNotFoundException ex) {
+        ErrorCodeResponse response = new ErrorCodeResponse(ex.getErrorCode(), ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidReservationTimeException.class)
+    public ResponseEntity<ErrorCodeResponse> handlerCustomErrorException(ErrorCodeResponse e) {
+        ErrorCodeResponse errorMsg = new ErrorCodeResponse(e.getErrorCode(), e.getMessage());
+        return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
+    }
+
 }

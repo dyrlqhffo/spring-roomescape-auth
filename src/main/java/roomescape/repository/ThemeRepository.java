@@ -4,6 +4,7 @@ import roomescape.domain.Theme;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ThemeRepository {
     List<Theme> findThemes();
@@ -12,7 +13,7 @@ public interface ThemeRepository {
 
     void deleteTheme(Long id);
 
-    Theme findThemeById(Long themeId);
+    Optional<Theme> findThemeById(Long themeId);
 
     int countDuplicatedName(ThemeCreateRequest request);
 }

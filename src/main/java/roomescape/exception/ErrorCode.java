@@ -1,15 +1,19 @@
 package roomescape.exception;
 
+import org.springframework.http.HttpStatus;
+
 public enum ErrorCode {
 
-    //400
-    INVALID_INPUT_VALUE,
+    THEME_NOT_FOUND(HttpStatus.NOT_FOUND),
 
-    INVALID_TIME_ZONE,
+    INVALID_RESERVATION_TIME(HttpStatus.BAD_REQUEST);
 
+    private final HttpStatus status;
+    ErrorCode(HttpStatus status) {
+        this.status = status;
+    }
 
-    INVALID_RESULT,
-
-    INTERNAL_SERVER_ERROR
-
+    public HttpStatus getStatus() {
+        return status;
+    }
 }

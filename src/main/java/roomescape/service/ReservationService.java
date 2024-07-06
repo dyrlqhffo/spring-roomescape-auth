@@ -11,6 +11,8 @@ import roomescape.dto.theme.ThemeResponse;
 import roomescape.dto.time.ReservationTimeResponse;
 import roomescape.exception.ErrorCode;
 import roomescape.exception.ErrorCodeResponse;
+import roomescape.exception.custom.InvalidReservationTimeException;
+import roomescape.exception.custom.ThemeNotFoundException;
 import roomescape.repository.ReservationRepository;
 import roomescape.repository.ReservationTimeRepository;
 import roomescape.repository.ThemeRepository;
@@ -47,7 +49,8 @@ public class ReservationService {
     public ReservationCreateResponse createReservation(ReservationCreateRequest request) {
         checkReservationTime(request);
         ReservationTime time = reservationTimeRepository.findReservationTimeById(request.getTimeId());
-        Theme theme = themeRepository.findThemeById(request.getThemeId());
+        Theme theme = themeRepository.findThemeById(request.getThemeId())
+                .orElseThrow(() -> new ThemeNotFoundException(ErrorCode.THEME_NOT_FOUND, "해당 테마가 존재하지 않습니다."));
         Reservation reservation = reservationRepository.createReservation(request, time, theme);
         return ReservationCreateResponse.fromEntity(reservation);
     }
@@ -68,7 +71,7 @@ public class ReservationService {
 
         if (reservatedDate.isBefore(currentDate) ||
                 reservatedDate.equals(currentDate) && reservatedTime.getStartAt().isBefore(currentTime)) {
-            throw new ErrorCodeResponse(ErrorCode.INVALID_TIME_ZONE, "예약 시간을 다시 확인해주세요.");
+            throw new InvalidReservationTimeException(ErrorCode.INVALID_RESERVATION_TIME, "예약 시간을 다시 확인해주세요.");
         }
     }
 }

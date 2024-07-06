@@ -17,6 +17,7 @@ import roomescape.dto.time.ReservationTimeRequest;
 import roomescape.dto.time.create.ReservationTimeCreateResponse;
 import roomescape.exception.ErrorCode;
 import roomescape.exception.ErrorCodeResponse;
+import roomescape.exception.custom.InvalidReservationTimeException;
 
 import java.util.List;
 
@@ -83,12 +84,8 @@ class ReservationServiceTest {
     void checkException(){
         //과거의 시간으로 등록을 했을 때 throw new ErrorCodeResponse(ErrorCode.INVALID_TIME_ZONE, "예약 시간을 다시 확인해주세요.");
         //예외 발생
-        ErrorCodeResponse error = assertThrows(ErrorCodeResponse.class, () -> {
+        org.junit.jupiter.api.Assertions.assertThrows(InvalidReservationTimeException.class, () -> {
             reservationService.createReservation(new ReservationCreateRequest("2024-05-20", "hello", 1L, 1L));
         });
-
-        assertThat(error.getErrorCode()).isEqualTo(ErrorCode.INVALID_TIME_ZONE);
-        assertThat(error.getMessage()).isEqualTo("예약 시간을 다시 확인해주세요.");
-
     }
 }
