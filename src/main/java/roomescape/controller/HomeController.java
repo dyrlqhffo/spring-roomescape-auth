@@ -11,7 +11,7 @@ public class HomeController {
         return "admin/index";
     }
 
-    @GetMapping("/reservation")
+    @GetMapping("/admin/reservation")
     public String reservation() {
         return "reservation";
     }
