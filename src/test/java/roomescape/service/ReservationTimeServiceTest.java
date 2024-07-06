@@ -9,8 +9,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import roomescape.domain.ReservationTime;
+import roomescape.dto.reservation.create.ReservationCreateRequest;
+import roomescape.dto.theme.create.ThemeCreateRequest;
 import roomescape.dto.time.ReservationTimeRequest;
 import roomescape.dto.time.ReservationTimeResponse;
+import roomescape.dto.time.available.ReservationTimeAvailableResponse;
 import roomescape.dto.time.create.ReservationTimeCreateResponse;
 import roomescape.exception.custom.DuplicatedReservationTimeException;
 
@@ -28,10 +31,16 @@ class ReservationTimeServiceTest {
     @Autowired
     ReservationTimeService reservationTimeService;
 
+    @Autowired
+    ThemeService themeService;
+
+    @Autowired
+    ReservationService reservationService;
+
     @BeforeEach
     void init() {
-        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-        reservationTimeService.createTime(new ReservationTimeRequest("13:00"));
+//        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
+//        reservationTimeService.createTime(new ReservationTimeRequest("13:00"));
     }
 
 
@@ -83,5 +92,44 @@ class ReservationTimeServiceTest {
         assertThrows(DuplicatedReservationTimeException.class, ()->{
             reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
         });
+    }
+
+    @Test
+    @DisplayName("예약 가능한 시간대 조회 테스트")
+    void findAvailableReservationTime() {
+
+        //given
+        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
+        themeService.createTheme(new ThemeCreateRequest("무서운 이야기", "너무 무서움ㄷㄷ", "GOOD"));
+        String date = "2024-06-24";
+        Long themeId = 1L;
+
+        //when
+        List<ReservationTimeAvailableResponse> response =
+                reservationTimeService.findAvailableReservationTime(date, themeId);
+
+        //then
+        assertThat(response.size()).isEqualTo(1);
+        assertThat(response.get(0).getStartAt()).isEqualTo("12:00");
+    }
+
+    @Test
+    @DisplayName("예약 가능한 시간대 조회 실패 테스트")
+    void failAvailableReservationTime() {
+        //given
+        String date = "2024-06-24";
+        Long themeId = 1L;
+        themeService.createTheme(new ThemeCreateRequest("무서운 이야기", "너무 무서움ㄷㄷ", "GOOD"));
+        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
+        reservationService.createReservation(new ReservationCreateRequest(date, "brown", 1L, 1L));
+
+        //이미 예약이 차서 가능한 시간대 미존재
+        //when
+        List<ReservationTimeAvailableResponse> response =
+                reservationTimeService.findAvailableReservationTime(date, 1L);
+
+        //then
+        assertThat(response.size()).isNotEqualTo(1);
+        assertThat(response.size()).isEqualTo(0);
     }
 }
