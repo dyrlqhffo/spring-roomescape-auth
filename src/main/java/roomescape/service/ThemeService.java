@@ -6,7 +6,6 @@ import roomescape.dto.theme.ThemeResponse;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 import roomescape.dto.theme.create.ThemeCreateResponse;
 import roomescape.exception.custom.DuplicatedThemeNameException;
-import roomescape.mapper.ThemeMapper;
 import roomescape.repository.ThemeRepository;
 
 import java.util.List;
@@ -24,13 +23,13 @@ public class ThemeService {
     public List<ThemeResponse> findThemes() {
         return themeRepository.findThemes()
                 .stream()
-                .map(theme -> ThemeMapper.toDto(theme))
+                .map(theme -> ThemeResponse.toDto(theme))
                 .collect(Collectors.toList());
     }
 
     public ThemeCreateResponse createTheme(ThemeCreateRequest request) {
         checkDuplicatedThemeName(request);
-        Theme entity = ThemeMapper.toEntity(request);
+        Theme entity = ThemeCreateRequest.toEntity(request);
         Theme theme = themeRepository.createTheme(entity);
         return ThemeCreateResponse.toResponse(theme);
     }

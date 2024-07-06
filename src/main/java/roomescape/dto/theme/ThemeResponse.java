@@ -2,6 +2,7 @@ package roomescape.dto.theme;
 
 
 import roomescape.domain.Theme;
+import roomescape.dto.theme.create.ThemeCreateRequest;
 
 public class ThemeResponse {
 
@@ -12,6 +13,13 @@ public class ThemeResponse {
 
     public static ThemeResponse fromEntity(Theme theme) {
         return new ThemeResponse(theme.getId(), theme.getName(), theme.getDescription(), theme.getThumbnail());
+    }
+    public static ThemeResponse toDto(Theme theme) {
+        if (theme == null) {
+            return null;
+        }
+
+        return ThemeResponse.fromEntity(theme);
     }
 
     public ThemeResponse() {

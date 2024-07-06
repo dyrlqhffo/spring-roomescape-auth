@@ -3,6 +3,7 @@ package roomescape.dto.theme.create;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import roomescape.domain.Theme;
 
 public class ThemeCreateRequest {
 
@@ -13,6 +14,13 @@ public class ThemeCreateRequest {
     @Size(min = 5, message = "설명이 너무 짧습니다. 더 작성해주세요.")
     private String description;
     private String thumbnail;
+
+    public static Theme toEntity(ThemeCreateRequest request) {
+        if (request == null) {
+            return  null;
+        }
+        return new Theme(request.getName(), request.getDescription(), request.getThumbnail());
+    }
 
     public ThemeCreateRequest() {
     }
