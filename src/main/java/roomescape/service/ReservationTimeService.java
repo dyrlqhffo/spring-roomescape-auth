@@ -42,9 +42,9 @@ public class ReservationTimeService {
 
     public ReservationTimeCreateResponse createTime(ReservationTimeRequest request) {
         checkDuplicatedReservationTime(request);
-        Long id = reservationTimeRepository.createTime(request);
-        ReservationTime entity = reservationTimeRepository.findReservationTimeById(id);
-        return ReservationTimeCreateResponse.toDto(entity);
+        ReservationTime reservationTime = ReservationTime.from(request);
+        ReservationTime response = reservationTimeRepository.createTime(reservationTime);
+        return ReservationTimeCreateResponse.toDto(response);
     }
 
     public void deleteTime(Long id) {

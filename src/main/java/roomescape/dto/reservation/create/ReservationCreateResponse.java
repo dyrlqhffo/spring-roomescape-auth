@@ -27,7 +27,7 @@ public class ReservationCreateResponse {
     }
     public static ReservationCreateResponse fromEntity(Reservation reservation) {
         return new ReservationCreateResponse(reservation.getId(), reservation.getDate(), reservation.getName(),
-                new ReservationTimeResponse(reservation.getTime()), ThemeResponse.fromEntity(reservation.getTheme()));
+                new ReservationTimeResponse(reservation.getTime()), ThemeResponse.fromDomain(reservation.getTheme()));
     }
 
     public Long getId() {

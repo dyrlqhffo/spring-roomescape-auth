@@ -12,10 +12,9 @@ public class HomeController {
     }
 
     @GetMapping("/admin/reservation")
-    public String reservation() {
-        return "reservation";
+    public String adminReservation() {
+        return "admin/reservation";
     }
-
     @GetMapping("/admin/time")
     public String time() {
         return "admin/time";
@@ -24,6 +23,11 @@ public class HomeController {
     @GetMapping("/admin/theme")
     public String theme() {
         return "admin/theme";
+    }
+
+    @GetMapping("/reservation")
+    public String reservation() {
+        return "reservation";
     }
 
     @GetMapping("/login")

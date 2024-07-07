@@ -12,6 +12,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import roomescape.exception.custom.AuthorizationException;
+import roomescape.exception.custom.InvalidInputException;
 import roomescape.exception.custom.InvalidReservationTimeException;
 import roomescape.exception.custom.ThemeNotFoundException;
 
@@ -32,13 +34,13 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public final ResponseEntity<Map<String, List<String>>> handleGeneralExceptions(Exception ex){
+    public final ResponseEntity<Map<String, List<String>>> handleGeneralExceptions(Exception ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public final ResponseEntity<Map<String, List<String>>> handleRuntimeExceptions(RuntimeException ex){
+    public final ResponseEntity<Map<String, List<String>>> handleRuntimeExceptions(RuntimeException ex) {
         List<String> errors = Collections.singletonList(ex.getMessage());
         return new ResponseEntity<>(getErrorsMap(errors), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -82,4 +84,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorMsg, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<ErrorCodeResponse> handlerAuthorizationException(AuthorizationException ex) {
+        ErrorCodeResponse response = new ErrorCodeResponse(ex.getErrorCode(), ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public ResponseEntity<ErrorCodeResponse> handlerEmptyResultDataAccessException(EmptyResultDataAccessException exception) {
+        ErrorCodeResponse response = new ErrorCodeResponse(ErrorCode.USER_NOT_FOUND, "존재하지 않는 회원입니다. 다시 입력해주세요.");
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ErrorCodeResponse> handlerInvalidInputException(InvalidInputException ex) {
+        ErrorCodeResponse response = new ErrorCodeResponse(ErrorCode.INVALID_INPUT, ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

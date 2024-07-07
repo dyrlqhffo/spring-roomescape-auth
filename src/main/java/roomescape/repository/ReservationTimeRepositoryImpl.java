@@ -6,6 +6,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import roomescape.domain.ReservationTime;
 import roomescape.dto.time.ReservationTimeRequest;
+import roomescape.dto.time.create.ReservationTimeCreateResponse;
 
 import java.sql.PreparedStatement;
 import java.util.List;
@@ -33,17 +34,17 @@ public class ReservationTimeRepositoryImpl implements ReservationTimeRepository{
                 });
     }
     @Override
-    public Long createTime(ReservationTimeRequest request) {
+    public ReservationTime createTime(ReservationTime reservationTime) {
         String sql = "insert into reservation_time(start_at) values(?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(con -> {
             PreparedStatement ps = con.prepareStatement(
                     sql,new String[]{"id"});
-            ps.setString(1, request.getStartAt());
+            ps.setString(1, reservationTime.getStartAt().toString());
             return ps;
         },keyHolder);
 
-        return keyHolder.getKey().longValue();
+        return new ReservationTime(keyHolder.getKey().longValue(), reservationTime.getStartAt());
 
     }
 

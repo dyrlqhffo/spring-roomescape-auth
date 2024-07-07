@@ -10,7 +10,11 @@ public enum ErrorCode {
 
     USER_NOT_FOUND(HttpStatus.NOT_FOUND),
 
-    UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED);
+    UNAUTHORIZED_USER(HttpStatus.UNAUTHORIZED),
+
+    INVALID_THEME_NAME(HttpStatus.BAD_REQUEST),
+
+    INVALID_INPUT(HttpStatus.BAD_REQUEST);
 
     private final HttpStatus status;
     ErrorCode(HttpStatus status) {

@@ -26,7 +26,7 @@ public class ReservationsResponse {
         this.name = reservation.getName();
         this.date = reservation.getDate();
         this.time = new ReservationTimeResponse(reservation.getTime());
-        this.theme = ThemeResponse.fromEntity(reservation.getTheme());
+        this.theme = ThemeResponse.fromDomain(reservation.getTheme());
     }
 
     public Long getId() {

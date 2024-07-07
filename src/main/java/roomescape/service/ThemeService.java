@@ -2,6 +2,7 @@ package roomescape.service;
 
 import org.springframework.stereotype.Service;
 import roomescape.domain.Theme;
+import roomescape.domain.User;
 import roomescape.dto.theme.ThemeResponse;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 import roomescape.dto.theme.create.ThemeCreateResponse;
@@ -23,14 +24,14 @@ public class ThemeService {
     public List<ThemeResponse> findThemes() {
         return themeRepository.findThemes()
                 .stream()
-                .map(theme -> ThemeResponse.toDto(theme))
+                .map(ThemeResponse::fromDomain)
                 .collect(Collectors.toList());
     }
 
     public ThemeCreateResponse createTheme(ThemeCreateRequest request) {
         checkDuplicatedThemeName(request);
-        Theme entity = ThemeCreateRequest.toEntity(request);
-        Theme theme = themeRepository.createTheme(entity);
+        Theme theme = Theme.from(request);
+        Theme savedTheme = themeRepository.createTheme(theme);
         return ThemeCreateResponse.toResponse(theme);
     }
 

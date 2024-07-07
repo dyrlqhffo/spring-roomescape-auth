@@ -4,6 +4,9 @@ package roomescape.dto.theme;
 import roomescape.domain.Theme;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class ThemeResponse {
 
     private Long id;
@@ -11,15 +14,14 @@ public class ThemeResponse {
     private String description;
     private String thumbnail;
 
-    public static ThemeResponse fromEntity(Theme theme) {
-        return new ThemeResponse(theme.getId(), theme.getName(), theme.getDescription(), theme.getThumbnail());
-    }
-    public static ThemeResponse toDto(Theme theme) {
-        if (theme == null) {
-            return null;
+    public static ThemeResponse fromDomain(Theme theme) {
+        //설명이 길 경우 ...표시를 하기 때문에 테마 리스트를 보여줄 때 사용
+        String foundDescription = theme.getDescription();
+        if (foundDescription.length() > 10) {
+            foundDescription = foundDescription.substring(0, 5) + "...";
         }
 
-        return ThemeResponse.fromEntity(theme);
+        return new ThemeResponse(theme.getId(), theme.getName(), foundDescription, theme.getThumbnail());
     }
 
     public ThemeResponse() {
