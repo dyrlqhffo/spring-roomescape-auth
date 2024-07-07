@@ -9,14 +9,10 @@ import java.time.LocalDate;
 public class ReservationsResponse {
 
     private Long id;
-
     private String name;
     private LocalDate date;
-
     private ReservationTimeResponse time;
-
     private ThemeResponse theme;
-
 
     public ReservationsResponse() {
     }

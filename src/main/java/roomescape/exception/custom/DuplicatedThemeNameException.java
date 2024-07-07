@@ -1,6 +1,7 @@
 package roomescape.exception.custom;
 
 public class DuplicatedThemeNameException extends RuntimeException {
+
     public DuplicatedThemeNameException() {
         super();
     }

@@ -7,7 +7,6 @@ import java.time.LocalTime;
 public class ReservationTimeResponse {
 
     private Long id;
-
     private LocalTime startAt;
 
     public static ReservationTimeResponse toDto(ReservationTime reservationTime) {
@@ -21,7 +20,6 @@ public class ReservationTimeResponse {
         this.id = reservationTime.getId();
         this.startAt = reservationTime.getStartAt();
     }
-
 
     public Long getId() {
         return id;

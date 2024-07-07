@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 public class ThemeService {
 
     private final ThemeRepository themeRepository;
-
     public ThemeService(ThemeRepository themeRepository) {
         this.themeRepository = themeRepository;
     }

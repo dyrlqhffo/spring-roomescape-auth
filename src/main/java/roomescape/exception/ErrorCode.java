@@ -17,6 +17,7 @@ public enum ErrorCode {
     INVALID_INPUT(HttpStatus.BAD_REQUEST);
 
     private final HttpStatus status;
+
     ErrorCode(HttpStatus status) {
         this.status = status;
     }

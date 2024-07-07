@@ -9,13 +9,13 @@ public class ThemeCreateResponse {
     private String description;
     private String thumbnail;
 
-
-
     public static ThemeCreateResponse toResponse(Theme theme) {
         return new ThemeCreateResponse(theme.getId(), theme.getName(), theme.getDescription(), theme.getThumbnail());
     }
+
     public ThemeCreateResponse() {
     }
+
     public ThemeCreateResponse(Long id, String name, String description, String thumbnail) {
         this.id = id;
         this.name = name;

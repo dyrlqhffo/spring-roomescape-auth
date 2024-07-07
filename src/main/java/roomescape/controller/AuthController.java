@@ -20,7 +20,6 @@ public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
     private final AuthService authService;
-
     public AuthController(AuthService authService) {
         this.authService = authService;
     }

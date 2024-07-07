@@ -3,7 +3,6 @@ package roomescape.exception;
 public class ErrorCodeResponse {
 
     private int status;
-
     private ErrorCode errorCode;
     private String message;
 

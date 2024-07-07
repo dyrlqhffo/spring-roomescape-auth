@@ -20,7 +20,6 @@ public class ThemeResponse {
         if (foundDescription.length() > 10) {
             foundDescription = foundDescription.substring(0, 5) + "...";
         }
-
         return new ThemeResponse(theme.getId(), theme.getName(), foundDescription, theme.getThumbnail());
     }
 

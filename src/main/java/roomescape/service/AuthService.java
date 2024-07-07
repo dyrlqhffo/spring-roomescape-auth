@@ -19,13 +19,8 @@ import roomescape.repository.AuthRepository;
 public class AuthService {
 
     private final AuthRepository authRepository;
-
     private final JwtTokenProvider jwtTokenProvider;
-
     private static final Logger log = LoggerFactory.getLogger(AuthService.class);
-
-    @Value("${security.jwt.token.secret-key}")
-    private String secretKey;
 
     public AuthService(AuthRepository authRepository, JwtTokenProvider jwtTokenProvider) {
         this.authRepository = authRepository;

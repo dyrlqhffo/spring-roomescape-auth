@@ -26,11 +26,8 @@ import java.util.stream.Collectors;
 public class ReservationService {
 
     private final ReservationRepository reservationRepository;
-
     private final ReservationTimeRepository reservationTimeRepository;
-
     private final ThemeRepository themeRepository;
-
 
     public ReservationService(ReservationRepository reservationRepository, ReservationTimeRepository reservationTimeRepository,
                               ThemeRepository themeRepository) {

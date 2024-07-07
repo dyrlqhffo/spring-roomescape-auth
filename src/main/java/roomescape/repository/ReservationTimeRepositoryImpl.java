@@ -33,6 +33,7 @@ public class ReservationTimeRepositoryImpl implements ReservationTimeRepository{
                     return reservationTime;
                 });
     }
+
     @Override
     public ReservationTime createTime(ReservationTime reservationTime) {
         String sql = "insert into reservation_time(start_at) values(?)";
@@ -45,7 +46,6 @@ public class ReservationTimeRepositoryImpl implements ReservationTimeRepository{
         },keyHolder);
 
         return new ReservationTime(keyHolder.getKey().longValue(), reservationTime.getStartAt().toString());
-
     }
 
     @Override

@@ -12,7 +12,6 @@ public class ReservationCreateResponse {
     private LocalDate date;
     private String name;
     private ReservationTimeResponse time;
-
     private ThemeResponse theme;
 
     public ReservationCreateResponse() {
@@ -25,6 +24,7 @@ public class ReservationCreateResponse {
         this.time = time;
         this.theme = theme;
     }
+
     public static ReservationCreateResponse fromEntity(Reservation reservation) {
         return new ReservationCreateResponse(reservation.getId(), reservation.getDate(), reservation.getName(),
                 new ReservationTimeResponse(reservation.getTime()), ThemeResponse.fromDomain(reservation.getTheme()));

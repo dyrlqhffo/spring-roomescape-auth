@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ThemeRepository {
+
     List<Theme> findThemes();
 
     Theme createTheme(Theme entity);

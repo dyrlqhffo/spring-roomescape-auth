@@ -32,7 +32,6 @@ public class ReservationTimeService {
         this.themeRepository = themeRepository;
     }
 
-
     public List<ReservationTimeResponse> findTimes() {
         return reservationTimeRepository.findTimes()
                 .stream()
