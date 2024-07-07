@@ -1,9 +1,6 @@
 package roomescape.dto.reservation.create;
 
 import jakarta.validation.constraints.*;
-import roomescape.dto.time.ReservationTimeResponse;
-
-import java.time.LocalDate;
 
 public class ReservationCreateRequest {
 

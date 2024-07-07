@@ -1,11 +1,6 @@
 package roomescape.dto.theme;
 
-
 import roomescape.domain.Theme;
-import roomescape.dto.theme.create.ThemeCreateRequest;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ThemeResponse {
 

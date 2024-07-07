@@ -2,7 +2,6 @@ package roomescape.service;
 
 import org.springframework.stereotype.Service;
 import roomescape.domain.Theme;
-import roomescape.domain.User;
 import roomescape.dto.theme.ThemeResponse;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 import roomescape.dto.theme.create.ThemeCreateResponse;

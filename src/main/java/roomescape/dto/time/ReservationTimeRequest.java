@@ -1,8 +1,6 @@
 package roomescape.dto.time;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import roomescape.dto.reservation.create.ReservationCreateRequest;
 
 public class ReservationTimeRequest {
 
