@@ -8,7 +8,6 @@ import java.time.LocalTime;
 public class ReservationTime {
 
     private Long id;
-
     private LocalTime startAt;
 
     public static ReservationTime from(ReservationTimeRequest request) {
@@ -20,11 +19,6 @@ public class ReservationTime {
 
     public ReservationTime(String startAt) {
         this.startAt = LocalTime.parse(startAt);
-    }
-
-    public ReservationTime(Long id, LocalTime startAt) {
-        this.id = id;
-        this.startAt = startAt;
     }
 
     public ReservationTime(Long id, String startAt) {

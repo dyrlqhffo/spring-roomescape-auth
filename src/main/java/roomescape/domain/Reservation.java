@@ -8,9 +8,7 @@ public class Reservation {
     private Long id;
     private String name;
     private LocalDate date;
-
     private ReservationTime time;
-
     private Theme theme;
 
     public Reservation() {
@@ -28,7 +26,7 @@ public class Reservation {
         this.id = id;
         this.name = name;
         this.date = LocalDate.parse(date);
-        this.time = new ReservationTime(time.getId(), time.getStartAt());
+        this.time = new ReservationTime(time.getId(), time.getStartAt().toString());
         this.theme = new Theme(theme.getId(), theme.getName(), theme.getDescription(), theme.getThumbnail());
     }
 

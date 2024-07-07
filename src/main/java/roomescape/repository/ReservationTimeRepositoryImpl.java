@@ -44,7 +44,7 @@ public class ReservationTimeRepositoryImpl implements ReservationTimeRepository{
             return ps;
         },keyHolder);
 
-        return new ReservationTime(keyHolder.getKey().longValue(), reservationTime.getStartAt());
+        return new ReservationTime(keyHolder.getKey().longValue(), reservationTime.getStartAt().toString());
 
     }
 

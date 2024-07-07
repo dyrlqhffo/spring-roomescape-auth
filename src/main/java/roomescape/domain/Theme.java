@@ -6,9 +6,9 @@ import roomescape.exception.custom.InvalidInputException;
 
 public class Theme {
     private Long id;
-    private String name; //테마 이름
-    private String description; //테마 설명
-    private String thumbnail; //테마 이미지
+    private String name;
+    private String description;
+    private String thumbnail;
 
     public static Theme from(ThemeCreateRequest request) {
         return new Theme(request.getName(), request.getDescription(), request.getThumbnail());

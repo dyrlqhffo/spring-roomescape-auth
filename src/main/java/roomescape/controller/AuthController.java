@@ -12,15 +12,13 @@ import roomescape.dto.auth.AuthLoginRequest;
 import roomescape.exception.ErrorCode;
 import roomescape.exception.custom.AuthorizationException;
 import roomescape.service.AuthService;
-
-import java.util.Arrays;
+import roomescape.util.CookieUtil;
 
 @RestController
 @RequestMapping("/login")
 public class AuthController {
 
     private static final Logger log = LoggerFactory.getLogger(AuthController.class);
-    private static final String TOKEN_COOKIE_NAME = "token";
     private final AuthService authService;
 
     public AuthController(AuthService authService) {
@@ -31,7 +29,7 @@ public class AuthController {
     public ResponseEntity<Void> authLogin(@RequestBody AuthLoginRequest request,
                                                        HttpServletResponse response) {
         String token = authService.authLogin(request);
-        Cookie cookie = createCookie(token);
+        Cookie cookie = CookieUtil.createCookie(token);
         response.addCookie(cookie);
         return ResponseEntity.ok().build();
 
@@ -40,35 +38,11 @@ public class AuthController {
     @GetMapping("/check")
     public ResponseEntity<AuthCheckResponse> checkLogin(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        String accessToken = extractTokenFromCookie(cookies);
-        checkAccessToken(accessToken);
+        String accessToken = CookieUtil.extractTokenFromCookie(cookies)
+                .orElseThrow(() -> new AuthorizationException(ErrorCode.UNAUTHORIZED_USER, "다시 로그인 해주세요."));
         AuthCheckResponse userResponse = authService.findUserFromToken(accessToken);
         return ResponseEntity.ok(userResponse);
 
     }
-
-    private String extractTokenFromCookie(Cookie[] cookies) {
-
-        return Arrays.stream(cookies)
-                .filter(cookie -> TOKEN_COOKIE_NAME.equals(cookie.getName()))
-                .map(Cookie::getValue)
-                .findFirst()
-                .orElse("");
-    }
-
-    private void checkAccessToken(String accessToken) {
-        if (accessToken.isEmpty()) {
-            throw new AuthorizationException(ErrorCode.UNAUTHORIZED_USER, "다시 로그인해주세요.");
-        }
-    }
-
-
-    private Cookie createCookie(String token) {
-        Cookie cookie = new Cookie(TOKEN_COOKIE_NAME, token);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        return cookie;
-    }
-
 
 }
