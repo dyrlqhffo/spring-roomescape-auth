@@ -28,18 +28,10 @@ public class AuthService {
 
     public String authLogin(AuthLoginRequest request) {
         User user = authRepository.findUserByEmail(request.getEmail())
-                .orElseThrow(() -> {
-                    throw new UserNotFoundException(ErrorCode.USER_NOT_FOUND,"존재하지 않는 회원입니다. 다시 입력해주세요.");
-                });
-        checkInvalidLogin(user, request);
+                .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND,"존재하지 않는 회원입니다. 다시 입력해주세요."));
+        user.checkPassword(request.getPassword());
         return jwtTokenProvider.createToken(request.getEmail());
 
-    }
-
-    private void checkInvalidLogin(User user, AuthLoginRequest request) {
-        if (!user.getPassword().equals(request.getPassword())) {
-            throw new AuthorizationException(ErrorCode.UNAUTHORIZED_USER, "패스워드가 일치하지 않습니다. 다시 입력해주세요.");
-        }
     }
 
     public AuthCheckResponse findUserFromToken(String accessToken) {
