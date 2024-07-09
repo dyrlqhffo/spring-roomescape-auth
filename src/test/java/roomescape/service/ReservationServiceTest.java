@@ -1,6 +1,5 @@
 package roomescape.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,21 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-import roomescape.domain.ReservationTime;
 import roomescape.dto.reservation.ReservationsResponse;
 import roomescape.dto.reservation.create.ReservationCreateRequest;
 import roomescape.dto.reservation.create.ReservationCreateResponse;
 import roomescape.dto.theme.create.ThemeCreateRequest;
 import roomescape.dto.time.ReservationTimeRequest;
-import roomescape.dto.time.create.ReservationTimeCreateResponse;
-import roomescape.exception.ErrorCode;
-import roomescape.exception.ErrorCodeResponse;
 import roomescape.exception.custom.InvalidReservationTimeException;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @Rollback
@@ -39,7 +33,7 @@ class ReservationServiceTest {
     void init() {
         reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
         themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.", "http://"));
-//        reservationService.createReservation(new ReservationCreateRequest("2024-06-22", "hello", 1L, 1L));
+        reservationService.createReservation(new ReservationCreateRequest("2024-08-22", "hello", 1L, 1L));
     }
 
     @Test
@@ -57,14 +51,14 @@ class ReservationServiceTest {
         //init의 등록한 reservation은 주석 처리했다는 가정
         //given
         ReservationCreateResponse reservation = reservationService.createReservation
-                (new ReservationCreateRequest("2024-06-22", "hello", 1L, 1L));
+                (new ReservationCreateRequest("2024-07-22", "hello", 1L, 1L));
 
         //when
         List<ReservationsResponse> list = reservationService.findReservations();
 
         //then
-        assertThat(list.size()).isEqualTo(1);
-        assertThat(list.get(0).getDate()).isEqualTo("2024-06-22");
+        assertThat(list.size()).isEqualTo(2);
+        assertThat(list.get(1).getDate()).isEqualTo("2024-07-22");
     }
 
     @Test

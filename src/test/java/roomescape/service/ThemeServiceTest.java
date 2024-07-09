@@ -41,12 +41,12 @@ class ThemeServiceTest {
 
         //then
         assertThat(themes).isNotEmpty();
-        assertThat(themes).hasSize(1);
+        assertThat(themes).hasSize(2);
         assertThat(themes).allSatisfy((themeResponse -> {
-            assertThat(themes.get(0).getId()).isEqualTo(1);
-            assertThat(themes.get(0).getName()).isEqualTo("hello");
-            assertThat(themes.get(0).getDescription()).isEqualTo("첫번째 테마");
-            assertThat(themes.get(0).getThumbnail()).isEqualTo("테마이미지");
+            assertThat(themes.get(1).getId()).isEqualTo(2L);
+            assertThat(themes.get(1).getName()).isEqualTo("hello");
+            assertThat(themes.get(1).getDescription()).isEqualTo("첫번째 테마");
+            assertThat(themes.get(1).getThumbnail()).isEqualTo("테마이미지");
         }));
     }
 
@@ -61,7 +61,7 @@ class ThemeServiceTest {
         ThemeCreateResponse response = themeService.createTheme(request);
 
         //then
-        assertThat(response.getId()).isEqualTo(1);
+        assertThat(response.getId()).isEqualTo(2L);
         assertThat(response.getName()).isEqualTo("hello");
         assertThat(response.getDescription()).isEqualTo(request.getDescription());
         assertThat(response.getThumbnail()).isEqualTo(request.getThumbnail());
@@ -75,7 +75,8 @@ class ThemeServiceTest {
         ThemeCreateResponse response = themeService.createTheme(request);
 
         //when
-        themeService.deleteTheme(1L);
+        themeService.deleteTheme(1L); //BeforeEach Init 메서드 안에 등록된 테마 삭제
+        themeService.deleteTheme(2L);
 
         //then
         assertThat(themeService.findThemes()).hasSize(0);

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import static java.nio.charset.StandardCharsets.UTF_8;

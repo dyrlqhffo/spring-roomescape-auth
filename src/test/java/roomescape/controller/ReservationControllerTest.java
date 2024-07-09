@@ -33,14 +33,14 @@ class ReservationControllerTest {
     void init() {
         themeService.createTheme(new ThemeCreateRequest("엄청 무서운 이야기", "설명은 없습니다.", "https://gg"));
         reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-        reservationService.createReservation(new ReservationCreateRequest("2024-06-23", "brown", 1L, 1L));
+        reservationService.createReservation(new ReservationCreateRequest("2024-07-23", "brown", 1L, 1L));
     }
 
     @Test
     void create() {
         var response = RestAssured
                 .given().log().all()
-                .body(new ReservationCreateRequest("2024-06-23", "hardy", 1L,1L))
+                .body(new ReservationCreateRequest("2024-07-23", "hardy", 1L,1L))
                 .contentType(ContentType.JSON)
                 .when().post("/reservations")
                 .then().log().all().extract();

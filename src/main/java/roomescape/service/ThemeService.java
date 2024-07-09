@@ -30,7 +30,7 @@ public class ThemeService {
         checkDuplicatedThemeName(request);
         Theme theme = Theme.from(request);
         Theme savedTheme = themeRepository.createTheme(theme);
-        return ThemeCreateResponse.toResponse(theme);
+        return ThemeCreateResponse.toResponse(savedTheme);
     }
 
     public void deleteTheme(Long id) {

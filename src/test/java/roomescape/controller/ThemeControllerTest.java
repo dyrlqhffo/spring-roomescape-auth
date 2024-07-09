@@ -46,7 +46,7 @@ class ThemeControllerTest {
     void create() {
         var response = RestAssured
                 .given().log().all()
-                .body(new ThemeCreateRequest("엄청 무서운 이야기", "설명은 없습니다.", "https://gg"))
+                .body(new ThemeCreateRequest("엄청 무서운 이야기222", "설명은 없습니다.", "https://gg"))
                 .contentType(ContentType.JSON)
                 .when().post("/themes")
                 .then().log().all().extract();
