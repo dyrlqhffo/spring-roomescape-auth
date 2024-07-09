@@ -14,7 +14,9 @@ public enum ErrorCode {
 
     INVALID_THEME_NAME(HttpStatus.BAD_REQUEST),
 
-    INVALID_INPUT(HttpStatus.BAD_REQUEST);
+    INVALID_INPUT(HttpStatus.BAD_REQUEST),
+
+    COOKIE_NOT_FOUND(HttpStatus.NOT_FOUND);
 
     private final HttpStatus status;
 
