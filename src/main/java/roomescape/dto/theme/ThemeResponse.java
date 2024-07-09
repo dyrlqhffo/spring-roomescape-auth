@@ -21,6 +21,11 @@ public class ThemeResponse {
     public ThemeResponse() {
     }
 
+    public ThemeResponse(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public ThemeResponse(Long id, String name, String description, String thumbnail) {
         this.id = id;
         this.name = name;

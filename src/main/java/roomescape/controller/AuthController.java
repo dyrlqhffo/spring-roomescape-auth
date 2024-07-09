@@ -32,6 +32,7 @@ public class AuthController {
     public ResponseEntity<Void> authLogin(@RequestBody AuthLoginRequest request,
                                           HttpServletResponse response) {
         String token = authService.authLogin(request);
+        System.out.println(token);
         Cookie cookie = CookieUtil.createCookie(token);
         response.addCookie(cookie);
         return ResponseEntity.ok().build();

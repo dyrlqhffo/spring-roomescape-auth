@@ -67,8 +67,8 @@ public class ReservationTimeRepositoryImpl implements ReservationTimeRepository{
     }
 
     @Override
-    public int countReservationTimeByStartAt(ReservationTimeRequest request) {
+    public int countReservationTimeByStartAt(String startAt) {
         String sql = "select count(*) from reservation_time where start_at = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, request.getStartAt());
+        return jdbcTemplate.queryForObject(sql, Integer.class, startAt);
     }
 }

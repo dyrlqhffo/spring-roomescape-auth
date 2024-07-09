@@ -38,7 +38,7 @@ public class ReservationService {
         return reservationRepository.findReservations()
                 .stream()
                 .map(ReservationsResponse::new)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public ReservationCreateResponse createReservation(ReservationCreateRequest request) {

@@ -23,7 +23,7 @@ public class ThemeService {
         return themeRepository.findThemes()
                 .stream()
                 .map(ThemeResponse::fromDomain)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     public ThemeCreateResponse createTheme(ThemeCreateRequest request) {

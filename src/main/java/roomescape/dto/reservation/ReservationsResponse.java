@@ -22,7 +22,7 @@ public class ReservationsResponse {
         this.name = reservation.getName();
         this.date = reservation.getDate();
         this.time = new ReservationTimeResponse(reservation.getTime());
-        this.theme = ThemeResponse.fromDomain(reservation.getTheme());
+        this.theme = new ThemeResponse(reservation.getTheme().getId(), reservation.getTheme().getName());
     }
 
     public Long getId() {

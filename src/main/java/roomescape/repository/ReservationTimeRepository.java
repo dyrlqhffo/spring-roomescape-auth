@@ -15,5 +15,5 @@ public interface ReservationTimeRepository {
 
     void deleteTime(Long id);
 
-    int countReservationTimeByStartAt(ReservationTimeRequest request);
+    int countReservationTimeByStartAt(String startAt);
 }

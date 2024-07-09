@@ -40,7 +40,7 @@ public class ReservationTimeService {
     }
 
     public ReservationTimeCreateResponse createTime(ReservationTimeRequest request) {
-        checkDuplicatedReservationTime(request);
+        checkDuplicatedReservationTime(request.getStartAt());
         ReservationTime reservationTime = ReservationTime.from(request);
         ReservationTime response = reservationTimeRepository.createTime(reservationTime);
         return ReservationTimeCreateResponse.toDto(response);
@@ -50,8 +50,8 @@ public class ReservationTimeService {
         reservationTimeRepository.deleteTime(id);
     }
 
-    public void checkDuplicatedReservationTime(ReservationTimeRequest request) {
-        int count = reservationTimeRepository.countReservationTimeByStartAt(request);
+    public void checkDuplicatedReservationTime(String startAt) {
+        int count = reservationTimeRepository.countReservationTimeByStartAt(startAt);
         if (count > 0) {
             throw new DuplicatedReservationTimeException("이미 존재하는 예약 시간입니다. 다른 시간대를 입력해주세요.");
         }
