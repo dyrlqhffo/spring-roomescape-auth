@@ -69,9 +69,15 @@ public class ReservationRepositoryImpl implements ReservationRepository{
     }
 
     @Override
-    public boolean existsByDateAndThemeAndTime(Theme theme, ReservationTime time, String date) {
-        String sql = "select count(*) from reservation where time_id = ? and theme_id =? and date = ?";
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, time.getId(), theme.getId(), date);
-        return count !=null && count >0;
+    public List<ReservationTime> findReservedTimesByDateAndTheme(String date, Theme theme) {
+        String sql = "select rt.id, rt.start_at from reservation r inner join reservation_time rt " +
+                     "on r.time_id = rt.id where r.date = ? and r.theme_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{date, theme.getId()}, (rs, rowNum) -> {
+                    ReservationTime reservationTime = new ReservationTime(
+                            rs.getLong("id"),
+                            rs.getString("start_at")
+                    );
+                    return reservationTime;
+                });
     }
 }

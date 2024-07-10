@@ -57,15 +57,11 @@ public class ReservationService {
     public void checkReservationTime(ReservationCreateRequest request){
         //예약 시간
         ReservationTime reservationTime = reservationTimeRepository.findReservationTimeById(request.getTimeId());
-        ReservationTimeResponse reservatedTime = ReservationTimeResponse.toDto(reservationTime);
-        LocalTime currentTime = LocalTime.now();
 
         //예약 날짜
         LocalDate reservatedDate = LocalDate.parse(request.getDate());
-        LocalDate currentDate = LocalDate.now();
 
-        if (reservatedDate.isBefore(currentDate) ||
-                reservatedDate.equals(currentDate) && reservatedTime.getStartAt().isBefore(currentTime)) {
+        if (reservationTime.isBeforeCurrentTime(reservatedDate)) {
             throw new InvalidReservationTimeException(ErrorCode.INVALID_RESERVATION_TIME, "예약 시간을 다시 확인해주세요.");
         }
     }

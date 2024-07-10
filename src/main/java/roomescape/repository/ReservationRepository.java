@@ -15,5 +15,5 @@ public interface ReservationRepository {
 
     void deleteReservation(Long id);
 
-    boolean existsByDateAndThemeAndTime(Theme theme, ReservationTime time, String date);
+    List<ReservationTime> findReservedTimesByDateAndTheme(String date, Theme theme);
 }

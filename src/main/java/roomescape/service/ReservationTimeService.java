@@ -61,10 +61,19 @@ public class ReservationTimeService {
         Theme theme = themeRepository.findThemeById(themeId).orElseThrow(() ->
                 new ThemeNotFoundException(ErrorCode.THEME_NOT_FOUND,"해당 테마가 존재하지 않습니다."));
 
+        // 모든 예약 시간 조회
         List<ReservationTime> times = reservationTimeRepository.findTimes();
-        return times.stream()
-                .filter(time -> !reservationRepository.existsByDateAndThemeAndTime(theme, time, date))
-                .map(ReservationTimeAvailableResponse::fromReservationTime)
+
+        // 이미 예약된 시간 조회
+        List<ReservationTime> reservedTimes = reservationRepository.findReservedTimesByDateAndTheme(date, theme);
+
+        // 예약 가능한 시간
+        List<ReservationTime> collect = times.stream()
+                .filter(time -> !reservedTimes.contains(time))
                 .collect(Collectors.toList());
+
+        return collect.stream()
+                .map(ReservationTimeAvailableResponse::fromReservationTime)
+                .toList();
     }
 }

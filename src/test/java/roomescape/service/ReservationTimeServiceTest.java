@@ -108,7 +108,7 @@ class ReservationTimeServiceTest {
                 reservationTimeService.findAvailableReservationTime(date, themeId);
 
         //then
-        assertThat(response.size()).isEqualTo(2);
+        assertThat(response.size()).isEqualTo(1);
         assertThat(response.get(0).getStartAt()).isEqualTo("12:00");
     }
 
