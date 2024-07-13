@@ -68,7 +68,8 @@ class ReservationTimeControllerTest {
         //theme 등록
         RestAssured
                 .given().log().all()
-                .body(new ThemeCreateRequest("무서운 이야기", "너무 무서움ㄷㄷ", "GOOD"))
+                .body(new ThemeCreateRequest("무서운 이야기",
+                        "너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ", "GOOD"))
                 .contentType(ContentType.JSON)
                 .when().post("/themes")
                 .then().log().all().extract();

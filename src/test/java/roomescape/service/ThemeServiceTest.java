@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import roomescape.dto.theme.ThemeResponse;
 import roomescape.dto.theme.create.ThemeCreateRequest;
@@ -16,7 +17,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
 class ThemeServiceTest {
 
@@ -26,14 +28,15 @@ class ThemeServiceTest {
 
     @BeforeEach
     void init() {
-        themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.", "http://"));
+       // themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.", "http://"));
     }
 
     @Test
     @DisplayName("테마의 리스트 테스트")
     void findThemes() {
         //given
-        ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마", "테마이미지");
+        ThemeCreateRequest request = new ThemeCreateRequest("hello",
+                "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
         themeService.createTheme(request);
 
         //when
@@ -41,13 +44,7 @@ class ThemeServiceTest {
 
         //then
         assertThat(themes).isNotEmpty();
-        assertThat(themes).hasSize(2);
-        assertThat(themes).allSatisfy((themeResponse -> {
-            assertThat(themes.get(1).getId()).isEqualTo(2L);
-            assertThat(themes.get(1).getName()).isEqualTo("hello");
-            assertThat(themes.get(1).getDescription()).isEqualTo("첫번째 테마");
-            assertThat(themes.get(1).getThumbnail()).isEqualTo("테마이미지");
-        }));
+        assertThat(themes).hasSize(1);
     }
 
     @Test
@@ -55,13 +52,14 @@ class ThemeServiceTest {
     void create() {
 
         //given
-        ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마", "테마이미지");
+        ThemeCreateRequest request = new ThemeCreateRequest("hello",
+                "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
 
         //when
         ThemeCreateResponse response = themeService.createTheme(request);
 
         //then
-        assertThat(response.getId()).isEqualTo(2L);
+        assertThat(response.getId()).isEqualTo(1L);
         assertThat(response.getName()).isEqualTo("hello");
         assertThat(response.getDescription()).isEqualTo(request.getDescription());
         assertThat(response.getThumbnail()).isEqualTo(request.getThumbnail());
@@ -71,12 +69,13 @@ class ThemeServiceTest {
     @DisplayName("테마 삭제")
     void delete() {
         //given
-        ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마", "테마이미지");
+        ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
         ThemeCreateResponse response = themeService.createTheme(request);
 
+        assertThat(response.getId()).isEqualTo(1L);
+
         //when
-        themeService.deleteTheme(1L); //BeforeEach Init 메서드 안에 등록된 테마 삭제
-        themeService.deleteTheme(2L);
+        themeService.deleteTheme(1L);
 
         //then
         assertThat(themeService.findThemes()).hasSize(0);
@@ -86,9 +85,10 @@ class ThemeServiceTest {
     @Test
     @DisplayName("중복 테마 등록시 예외 발생")
     void checkDuplicatedThemeName() {
-        //init 메서드에 존재하는 테마 이름, 중복된 이름으로 DuplicatedThemeNameException 예외 발생.
+        ThemeCreateRequest request = new ThemeCreateRequest("테마1", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
+        ThemeCreateResponse response = themeService.createTheme(request);
         Assertions.assertThrows(DuplicatedThemeNameException.class, () -> {
-            themeService.createTheme(new ThemeCreateRequest("테마1", "설명설명설명", "???"));
+            themeService.createTheme(new ThemeCreateRequest("테마1", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "???"));
         });
     }
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import roomescape.dto.reservation.ReservationsResponse;
@@ -17,9 +18,9 @@ import roomescape.exception.custom.InvalidReservationTimeException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
-@Rollback
 class ReservationServiceTest {
 
     @Autowired
@@ -32,7 +33,7 @@ class ReservationServiceTest {
     @BeforeEach
     void init() {
         reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-        themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.", "http://"));
+        themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.테마1의 설명은 비밀입니다.테마1의 설명은 비밀입니다.", "http://"));
         reservationService.createReservation(new ReservationCreateRequest("2024-08-22", "hello", 1L, 1L));
     }
 

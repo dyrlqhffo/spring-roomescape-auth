@@ -6,11 +6,13 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import roomescape.domain.ReservationTime;
 import roomescape.dto.reservation.create.ReservationCreateRequest;
 import roomescape.dto.theme.create.ThemeCreateRequest;
+import roomescape.dto.theme.create.ThemeCreateResponse;
 import roomescape.dto.time.ReservationTimeRequest;
 import roomescape.dto.time.ReservationTimeResponse;
 import roomescape.dto.time.available.ReservationTimeAvailableResponse;
@@ -24,7 +26,8 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Transactional
 class ReservationTimeServiceTest {
 
@@ -98,17 +101,16 @@ class ReservationTimeServiceTest {
     void findAvailableReservationTime() {
 
         //given
-        //reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-        themeService.createTheme(new ThemeCreateRequest("무서운 이야기", "너무 무서움ㄷㄷ", "GOOD"));
+        ThemeCreateResponse theme = themeService.createTheme(new ThemeCreateRequest("무서운 이야기",
+                "너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ", "GOOD"));
         String date = "2024-09-24";
-        Long themeId = 1L;
 
         //when
         List<ReservationTimeAvailableResponse> response =
-                reservationTimeService.findAvailableReservationTime(date, themeId);
+                reservationTimeService.findAvailableReservationTime(date, theme.getId());
 
         //then
-        assertThat(response.size()).isEqualTo(1);
+        assertThat(response.size()).isEqualTo(2);
         assertThat(response.get(0).getStartAt()).isEqualTo("12:00");
     }
 
@@ -118,9 +120,8 @@ class ReservationTimeServiceTest {
         //given
         String date = "2024-09-24";
         Long themeId = 1L;
-        themeService.createTheme(new ThemeCreateRequest("무서운 이야기", "너무 무서움ㄷㄷ", "GOOD"));
-//        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-//        reservationTimeService.createTime(new ReservationTimeRequest("13:00"));
+        themeService.createTheme(new ThemeCreateRequest("무서운 이야기",
+                "너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ너무 무서움ㄷㄷ", "GOOD"));
         reservationService.createReservation(new ReservationCreateRequest(date, "brown", 1L, 1L));
         reservationService.createReservation(new ReservationCreateRequest(date, "brown", 2L, 1L));
 

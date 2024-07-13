@@ -69,7 +69,8 @@ public class ReservationTimeService {
 
         // 예약 가능한 시간
         List<ReservationTime> collect = times.stream()
-                .filter(time -> !reservedTimes.contains(time))
+                .filter(time -> reservedTimes.stream()
+                        .noneMatch(reservedTime -> reservedTime.getStartAt().equals(time.getStartAt())))
                 .collect(Collectors.toList());
 
         return collect.stream()

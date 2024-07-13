@@ -26,4 +26,12 @@ public class ReservationTimeAvailableResponse {
     public String getStartAt() {
         return startAt;
     }
+
+    @Override
+    public String toString() {
+        return "ReservationTimeAvailableResponse{" +
+                "id=" + id +
+                ", startAt='" + startAt + '\'' +
+                '}';
+    }
 }
