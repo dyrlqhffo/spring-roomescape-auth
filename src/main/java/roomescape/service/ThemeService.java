@@ -28,7 +28,7 @@ public class ThemeService {
 
     public ThemeCreateResponse createTheme(ThemeCreateRequest request) {
         checkDuplicatedThemeName(request);
-        Theme theme = Theme.from(request);
+        Theme theme = request.from(request);
         Theme savedTheme = themeRepository.createTheme(theme);
         return ThemeCreateResponse.toResponse(savedTheme);
     }

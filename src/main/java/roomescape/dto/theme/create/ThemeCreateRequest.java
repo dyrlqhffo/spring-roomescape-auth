@@ -1,6 +1,7 @@
 package roomescape.dto.theme.create;
 
 import jakarta.validation.constraints.NotBlank;
+import roomescape.domain.Theme;
 
 public class ThemeCreateRequest {
 
@@ -14,6 +15,10 @@ public class ThemeCreateRequest {
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
+    }
+
+    public Theme from(ThemeCreateRequest request){
+        return new Theme(request.getName(), request.getDescription(), request.getThumbnail());
     }
 
     public String getName() {

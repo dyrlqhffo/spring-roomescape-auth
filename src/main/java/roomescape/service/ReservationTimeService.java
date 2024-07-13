@@ -41,9 +41,9 @@ public class ReservationTimeService {
 
     public ReservationTimeCreateResponse createTime(ReservationTimeRequest request) {
         checkDuplicatedReservationTime(request.getStartAt());
-        ReservationTime reservationTime = ReservationTime.from(request);
-        ReservationTime response = reservationTimeRepository.createTime(reservationTime);
-        return ReservationTimeCreateResponse.toDto(response);
+        ReservationTime changedReservationTime = ReservationTime.from(request);
+        ReservationTime reservationTime = reservationTimeRepository.createTime(changedReservationTime);
+        return ReservationTimeCreateResponse.toDto(reservationTime);
     }
 
     public void deleteTime(Long id) {
