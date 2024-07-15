@@ -12,6 +12,7 @@ public class ReservationCreateResponse {
     private LocalDate date;
     private String name;
     private ReservationTimeResponse time;
+
     private ThemeResponse theme;
 
     public ReservationCreateResponse() {

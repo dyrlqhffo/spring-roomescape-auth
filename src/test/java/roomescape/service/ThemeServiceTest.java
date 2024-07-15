@@ -45,6 +45,11 @@ class ThemeServiceTest {
         //then
         assertThat(themes).isNotEmpty();
         assertThat(themes).hasSize(1);
+        assertThat(themes).allSatisfy((themeResponse -> {
+            assertThat(themes.get(0).getId()).isEqualTo(1);
+            assertThat(themes.get(0).getName()).isEqualTo("hello");
+            assertThat(themes.get(0).getThumbnail()).isEqualTo("테마이미지");
+        }));
     }
 
     @Test
@@ -71,7 +76,6 @@ class ThemeServiceTest {
         //given
         ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
         ThemeCreateResponse response = themeService.createTheme(request);
-
         assertThat(response.getId()).isEqualTo(1L);
 
         //when
@@ -85,6 +89,7 @@ class ThemeServiceTest {
     @Test
     @DisplayName("중복 테마 등록시 예외 발생")
     void checkDuplicatedThemeName() {
+
         ThemeCreateRequest request = new ThemeCreateRequest("테마1", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
         ThemeCreateResponse response = themeService.createTheme(request);
         Assertions.assertThrows(DuplicatedThemeNameException.class, () -> {
