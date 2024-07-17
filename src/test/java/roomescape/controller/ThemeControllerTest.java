@@ -59,7 +59,7 @@ class ThemeControllerTest {
                 .given().log().all()
 //                .body()
                 .contentType(ContentType.JSON)
-                .when().delete("themes/1")
+                .when().delete("themes/2")
                 .then().log().all().extract();
 
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());

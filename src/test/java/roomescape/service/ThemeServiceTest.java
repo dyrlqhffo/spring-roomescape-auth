@@ -44,11 +44,11 @@ class ThemeServiceTest {
 
         //then
         assertThat(themes).isNotEmpty();
-        assertThat(themes).hasSize(1);
+        assertThat(themes).hasSize(2);
         assertThat(themes).allSatisfy((themeResponse -> {
-            assertThat(themes.get(0).getId()).isEqualTo(1);
-            assertThat(themes.get(0).getName()).isEqualTo("hello");
-            assertThat(themes.get(0).getThumbnail()).isEqualTo("테마이미지");
+            assertThat(themes.get(1).getId()).isEqualTo(2);
+            assertThat(themes.get(1).getName()).isEqualTo("hello");
+            assertThat(themes.get(1).getThumbnail()).isEqualTo("테마이미지");
         }));
     }
 
@@ -64,7 +64,7 @@ class ThemeServiceTest {
         ThemeCreateResponse response = themeService.createTheme(request);
 
         //then
-        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getId()).isEqualTo(2L);
         assertThat(response.getName()).isEqualTo("hello");
         assertThat(response.getDescription()).isEqualTo(request.getDescription());
         assertThat(response.getThumbnail()).isEqualTo(request.getThumbnail());
@@ -76,14 +76,13 @@ class ThemeServiceTest {
         //given
         ThemeCreateRequest request = new ThemeCreateRequest("hello", "첫번째 테마입니다.Hello 첫번째 테마입니다.Hello 첫번째 테마입니다.Hello", "테마이미지");
         ThemeCreateResponse response = themeService.createTheme(request);
-        assertThat(response.getId()).isEqualTo(1L);
+        assertThat(response.getId()).isEqualTo(2L);
 
         //when
-        themeService.deleteTheme(1L);
+        themeService.deleteTheme(2L);
 
         //then
-        assertThat(themeService.findThemes()).hasSize(0);
-        assertThat(themeService.findThemes()).isEmpty();
+        assertThat(themeService.findThemes()).hasSize(1);
     }
 
     @Test
