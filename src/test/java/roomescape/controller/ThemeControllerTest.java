@@ -17,7 +17,6 @@ class ThemeControllerTest {
     @Autowired
     ThemeController themeController;
 
-
     @BeforeEach
     void init() {
         themeController.createTheme(new ThemeCreateRequest(

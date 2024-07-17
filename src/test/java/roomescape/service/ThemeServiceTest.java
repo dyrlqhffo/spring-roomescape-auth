@@ -26,11 +26,6 @@ class ThemeServiceTest {
     @Autowired
     ThemeService themeService;
 
-    @BeforeEach
-    void init() {
-       // themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.", "http://"));
-    }
-
     @Test
     @DisplayName("테마의 리스트 테스트")
     void findThemes() {

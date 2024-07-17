@@ -20,11 +20,6 @@ class ReservationTimeControllerTest {
     @Autowired
     ReservationTimeService reservationTimeService;
 
-    @BeforeEach
-    void init() {
-        //reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-    }
-
     @Test
     void create() {
         var response = RestAssured

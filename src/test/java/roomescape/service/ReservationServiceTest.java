@@ -31,8 +31,6 @@ class ReservationServiceTest {
 
     @BeforeEach
     void init() {
-        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
-        themeService.createTheme(new ThemeCreateRequest("테마1", "테마1의 설명은 비밀입니다.테마1의 설명은 비밀입니다.테마1의 설명은 비밀입니다.", "http://"));
         reservationService.createReservation(new ReservationCreateRequest("2024-08-22", "hello", 1L, 1L));
     }
 

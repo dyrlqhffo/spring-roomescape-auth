@@ -38,11 +38,6 @@ class ReservationTimeServiceTest {
     @Autowired
     ReservationService reservationService;
 
-    @BeforeEach
-    void init() {
-    }
-
-
     @Test
     @DisplayName("예약 시간 리스트 테스트")
     void findTimes() {
