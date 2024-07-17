@@ -22,14 +22,14 @@ class ReservationTimeControllerTest {
 
     @BeforeEach
     void init() {
-        reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
+        //reservationTimeService.createTime(new ReservationTimeRequest("12:00"));
     }
 
     @Test
     void create() {
         var response = RestAssured
                 .given().log().all()
-                .body(new ReservationTimeRequest("13:00"))
+                .body(new ReservationTimeRequest("19:00"))
                 .contentType(ContentType.JSON)
                 .when().post("/times")
                 .then().log().all().extract();
