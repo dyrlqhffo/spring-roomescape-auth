@@ -2,7 +2,7 @@ let isEditing = false;
 const RESERVATION_API_ENDPOINT = '/reservations';
 const TIME_API_ENDPOINT = '/times';
 const THEME_API_ENDPOINT = '/themes';
-const MEMBER_API_ENDPOINT = '/members';
+const MEMBER_API_ENDPOINT = '/users';
 const timesOptions = [];
 const themesOptions = [];
 const membersOptions = [];
@@ -58,7 +58,7 @@ function fetchMembers() {
   requestRead(MEMBER_API_ENDPOINT)
       .then(data => {
         membersOptions.push(...data);
-        populateSelect('member', membersOptions, 'name');
+        populateSelect('user', membersOptions, 'name');
       })
       .catch(error => console.error('Error fetching member:', error));
 }

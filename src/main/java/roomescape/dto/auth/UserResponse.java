@@ -3,17 +3,21 @@ package roomescape.dto.auth;
 import roomescape.domain.Role;
 import roomescape.domain.User;
 
-public class AuthUserResponse {
+public class UserResponse {
+    private Long id;
     private String name;
     private String email;
-    private String password;
     private Role role;
 
-    public AuthUserResponse(String name, String email, String password, Role role) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.role = role;
+    public UserResponse(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.role = user.getRole();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -22,10 +26,6 @@ public class AuthUserResponse {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Role getRole() {

@@ -11,6 +11,8 @@ import roomescape.argumentresolver.LoginUser;
 import roomescape.domain.User;
 import roomescape.dto.auth.AuthCheckResponse;
 import roomescape.dto.auth.AuthLoginRequest;
+import roomescape.dto.auth.AuthUserResponse;
+import roomescape.dto.auth.UserResponse;
 import roomescape.exception.ErrorCode;
 import roomescape.exception.custom.AuthorizationException;
 import roomescape.exception.custom.CookieNotFoundException;
@@ -18,6 +20,7 @@ import roomescape.service.AuthService;
 import roomescape.util.CookieUtil;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -28,6 +31,11 @@ public class AuthController {
 
     public AuthController(AuthService authService) {
         this.authService = authService;
+    }
+
+    @GetMapping("/users")
+    public ResponseEntity<List<UserResponse>> findUsers() {
+        return ResponseEntity.ok().body(authService.findUsers());
     }
 
     @PostMapping("/login")
