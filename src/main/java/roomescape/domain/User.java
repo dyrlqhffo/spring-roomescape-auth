@@ -1,5 +1,6 @@
 package roomescape.domain;
 
+import roomescape.dto.reservation.create.ReservationCreateRequest;
 import roomescape.exception.ErrorCode;
 import roomescape.exception.custom.AuthorizationException;
 
@@ -19,10 +20,14 @@ public class User {
         }
     }
 
-    public void checkUser(User user) {
-        if(Optional.ofNullable(user).isEmpty()){
+    public void checkUser() {
+        if(Optional.ofNullable(this).isEmpty()) {
             throw new AuthorizationException(ErrorCode.UNAUTHORIZED_USER, "다시 로그인해주세요.");
         }
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     public User(String name, String email, String password) {

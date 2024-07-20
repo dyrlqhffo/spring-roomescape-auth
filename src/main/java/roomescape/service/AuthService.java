@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import roomescape.domain.Role;
 import roomescape.domain.User;
 import roomescape.dto.auth.AuthCheckResponse;
 import roomescape.dto.auth.AuthLoginRequest;
@@ -38,11 +37,11 @@ public class AuthService {
         String email = jwtTokenProvider.getEmailByToken(accessToken);
         User user = authRepository.findUserByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException(ErrorCode.USER_NOT_FOUND, "유저가 존재하지 않습니다."));
-        return new User(user.getName(), user.getEmail(), user.getPassword(), Role.USER);
+        return new User(user.getName(), user.getEmail(), user.getPassword(), user.getRole());
     }
 
     public AuthCheckResponse checkUser(User user) {
-        user.checkUser(user);
+        user.checkUser();
         return new AuthCheckResponse(user.getName());
     }
 }

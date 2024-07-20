@@ -1,4 +1,5 @@
 INSERT INTO users(name, email, password) values('modric', 'modric@gmail.com', 'asdf1234');
+INSERT INTO users(name, email, password, role) values('toni', 'toni@gmail.com', 'asdf1234', 'ADMIN');
 
 INSERT INTO reservation_time(start_at) values('12:00');
 INSERT INTO reservation_time(start_at) values('13:00');
